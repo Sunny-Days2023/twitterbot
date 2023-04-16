@@ -9,7 +9,7 @@
     "twitter": "^1.1.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "npm start",
     "build": "echo 'Build complete'"
   },
   "repository": {

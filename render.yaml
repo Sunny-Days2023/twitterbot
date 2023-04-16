@@ -1,0 +1,12 @@
+services:
+  - name: twitter-bot
+    env:
+      CONSUMER_KEY: "e17J8HLxxcsTnwKxEdCCQxXkt"
+      CONSUMER_SECRET: "Lry68A4IlJkl4XgAzupqQqyX90mV1zvWBVPnbKUnwUKa1sAkVW"
+      ACCESS_TOKEN: "1482054754553368578-wCBiWGzXoPXnK2a5OEOLGjGtPAgjm1"
+      ACCESS_TOKEN_SECRET: "k2BXCsVtfOM1TcTBnRKBwL4qsEo8N5vxMPAHOSZV3wZIb"
+    buildCommand: npm install && npm run build
+    startCommand: node index.js
+    healthCheckPath: /
+build:
+  - command: npm install && npm run build

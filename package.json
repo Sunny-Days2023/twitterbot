@@ -1,0 +1,20 @@
+{
+  "name": "twitterbot",
+  "version": "1.0.0",
+  "description": "My Twitter bot",
+  "main": "index.js",
+  "dependencies": {
+    "twitter": "^1.7.1",
+    "node-cron": "^3.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "build": "echo 'Build complete'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sunny-Days2023/unhingedbot.git"
+  },
+  "author": "Sunny",
+  "license": "MIT"
+}

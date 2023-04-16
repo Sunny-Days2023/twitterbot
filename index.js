@@ -1,6 +1,6 @@
 // Import dependencies
 const Twit = require('twit');
-const fs = require('fs');
+const fs = require('fs').promises;
 const cron = require('node-cron');
 
 // Set up Twitter API credentials
@@ -12,32 +12,37 @@ const T = new Twit({
 });
 
 // Read tweets from file and store in array
-const tweets = fs.readFileSync('tweets.txt', 'utf8').split('\n');
+async function getTweetsFromFile() {
+  try {
+    const data = await fs.readFile('tweets.txt', 'utf8');
+    return data.split('\n');
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+}
 
 // Function to select random tweet from array
-function selectRandomTweet() {
+function selectRandomTweet(tweets) {
   const randomIndex = Math.floor(Math.random() * tweets.length);
   return tweets[randomIndex];
 }
 
 // Function to post tweet to Twitter account
-function postTweet() {
-  const tweet = selectRandomTweet();
-  T.post('statuses/update', { status: tweet }, function(err, data, response) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('Tweet posted:', tweet);
-      fs.appendFile('log.txt', `${new Date().toISOString()} - ${tweet}\n`, function(err) {
-        if (err) {
-          console.log(err);
-        }
-      });
-    }
-  });
+async function postTweet() {
+  try {
+    const tweets = await getTweetsFromFile();
+    const tweet = selectRandomTweet(tweets);
+    const response = await T.post('statuses/update', { status: tweet });
+    console.log('Tweet posted:', tweet);
+    await fs.appendFile('log.txt', `${new Date().toISOString()} - ${tweet}\n`);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Set up cron job to run tweet function every hour
 cron.schedule('0 0 * * *', function() {
   postTweet();
 });
+;

@@ -38,6 +38,6 @@ function postTweet() {
 }
 
 // Set up cron job to run tweet function every hour
-cron.schedule('0 * * * *', function() {
+cron.schedule('0 0 * * *', function() {
   postTweet();
 });
